@@ -1,0 +1,33 @@
+html {
+  scroll-behavior: auto !important;
+}
+
+.suggestion {
+    background-color:white !important;
+    color: black !important;
+    animation: blinker 1s linear infinite !important;
+}
+
+.table.table-striped tbody tr td.suggestion {
+    background-color:yellow !important;
+    color: black !important;
+    animation: blinker 1s linear infinite !important;
+}
+
+.rmpPanel {
+    position:relative;
+    top: 35%;
+    height: 30%;
+    width: 100%;
+    z-index: 2147483647;
+    cursor: pointer;
+    background-color:#eef3a8 !important;
+    opacity: 1;
+}
+
+
+@keyframes blinker {
+50% {
+    opacity: 0;
+}
+}
