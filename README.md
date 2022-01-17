@@ -31,3 +31,7 @@ Others have noted that RMP has been asking similar tools to be removed from app 
 2) Go to chrome://extensions/
 3) Click "Load unpacked" on the top-left corner
 4) Select RateMProfessors/front_end, and that's it!
+
+## Future improvements:
+1) Enable users to iterate through each instructors with the same first and last name at UM to reduce ambiguity
+2) Better and sexier visualization display
