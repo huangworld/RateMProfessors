@@ -122,7 +122,6 @@ function parseResult(result) {
   // dummy node so we can search within response.doc
   var dummy = document.createElement("div");
   dummy.innerHTML = result; 
-//*[@id="root"]/div/div/div[4]/div[1]/div[3]/a
   scripts = dummy.getElementsByTagName("script");
   console.log(scripts.length);
   script = scripts[scripts.length - 2].innerHTML;
@@ -174,11 +173,9 @@ function showResultPanel(results, element) {
         else {
           console.log("response!")
           console.log(personalPage.doc);
-          //*[@id="ratingsList"]/li[1]/div/div
           // dummy node so we can search within response.doc
           var dummy = document.createElement("div");
           dummy.innerHTML = personalPage.doc;
-          //*[@id="ratingsList"]/li[1]/div/div
 
           if( dummy.querySelector ) {
             var ratingsList = dummy.querySelector('#ratingsList');
@@ -259,7 +256,6 @@ function clickHandler(event) {
   if (event.target.parentNode.classList.contains("col-sm-3") == false || event.target.tagName !== "A") {
     return;
   }
-  //  ("through valid check!")
   event.preventDefault();
   event.stopPropagation();
   console.log(event);
@@ -289,9 +285,7 @@ function hoverHandler(event) {
   }
   highlightElement(event);
 }
-// /html/body/form/div[3]/div[3]/div[3]/div[5]/div/div[2]/div[5]/a
-// /html/body/form/div[3]/div[3]/div[3]/div[6]/div/div[2]/div[5]/a
-//*[@id="contentMain_panelResults"]/div[5]/div/div[2]/div[5]/a
+
 function mouseOutHandler(event) {
   console.log(event);
   disableHighlight(event);
@@ -300,83 +294,3 @@ function mouseOutHandler(event) {
 window.addEventListener("mouseover", hoverHandler, true);
 window.addEventListener("mouseout", mouseOutHandler, true);
 window.addEventListener("click", clickHandler, true);
-
-
-// --------------------------------------- Prediction Panel ---------------------------------------
-
-
-function highlight(suggestion) {
-  console.log("highlight", suggestion);
-  let type = suggestion.type;
-  var ele = null;
-  currEleXpath = suggestion.ele;
-  currAction = type;
-  if (
-    suggestion.ele !== null &&
-    suggestion.ele !== ""
-  ) {
-    ele = getElementByXpath(document, suggestion.ele);
-    console.log(suggestion.ele);
-    console.log(ele);
-  }
-  console.log("debug2 highlight", suggestion, ele);
-  if (ele === null && type !== "GoBack" && type !== "ExtractURL") {
-    console.log("semi ele not found", suggestion);
-     ("suggestion not found, please manually demonstrate the next action") +
-      document.readyState;
-    chrome.runtime.sendMessage({ "action": "manualBackMode" }, (response) => { });
-    return "notFound";
-  }
-  console.log(
-    "content.js will highlight: " +
-      currAction +
-      " on " +
-      createXPathFromElement(ele)
-  );
-
-  switch (type) {
-    case "Click":
-      currEle = ele;
-      ele.classList.add("suggestion");
-      // for select/option[i]
-      if (currEle.tagName === "SELECT") {
-        // deselect all options
-        currEle.value = "";
-      }
-      if (currEle.tagName === "OPTION") {
-        currEle.selected = true;
-        currEle.parentNode.classList.add("suggestion");
-      }
-      ele.scrollIntoView({
-        behavior: "auto",
-        block: "center",
-        inline: "center",
-      });
-      addPredictionButtons(currAction, ele, suggestion.msg, null);
-      console.log("ele.class: " + ele.className);
-      return "click";
-    default:
-      console.log("unsupported type of suggestion: " + currAction);
-      return "unsupported";
-  }
-}
-
-
-
-
-
-
-// chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
-//   console.log("debug", message.action);
-//   if (message.action === "changeMode") {
-//     currMode = message.mode;
-//     recordStarted = message.recordStarted;
-//     if (message.mode === "ScrapeText") {
-//       document.addEventListener("mouseover", highlightElement);
-//       document.addEventListener("mouseout", disableHighlight);
-//       document.removeEventListener("click", linkHandler, true);
-//       document.removeEventListener("click", DownloadHandler, true);
-//       document.addEventListener("click", textHandler);
-//     }
-//   } 
-// }
