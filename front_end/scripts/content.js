@@ -265,14 +265,12 @@ function clickHandler(event) {
   const searchUrl = "https://www.ratemyprofessors.com/search/teachers?query=" + professorName[0] + "%" + professorName[1] + 
                     "&sid=U2Nob29sLTEyNTg=";
   chrome.runtime.sendMessage({action: "sendRequest", url: searchUrl}, function(response) {
-    if (response == undefined) {
-       ("Instructor info not available on RMP!");
-    }
-    else {
       results = parseResult(response.doc);
+      console.log(results)
+      if (results.length == 0) {
+        alert("Instructor info not available on RMP!");
+      }
       showResultPanel(results, event.target);
-      
-    }
   });
 
 }
